@@ -2,23 +2,59 @@
   "name": "tech-doc-hugo",
   "version": "0.0.1",
   "description": "Hugo theme for technical documentation.",
-  "main": "none.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": ">=16.16.0"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/google/docsy-example.git"
+    "url": "git+https://github.com/wangdengwu/notes.git"
   },
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/google/docsy-example/issues"
+  "scripts": {
+    "init": "shx rm -rf .git && git init -b main",
+    "prestart": "npm run clean",
+    "start": "exec-bin hugo server --bind=0.0.0.0 --disableFastRender",
+    "prebuild": "npm run clean",
+    "build": "exec-bin hugo --gc --minify",
+    "build:preview": "npm run build -D -F",
+    "clean": "shx rm -rf public resources",
+    "clean:install": "shx rm -rf package-lock.json node_modules ",
+    "lint": "npm run -s lint:scripts && npm run -s lint:styles && npm run -s lint:markdown",
+    "lint:scripts": "eslint assets/js",
+    "lint:styles": "stylelint \"assets/scss/**/*.{css,sass,scss,sss,less}\"",
+    "lint:markdown": "markdownlint-cli2 \"*.md\" \"content/**/*.md\"",
+    "lint:markdown-fix": "markdownlint-cli2-fix \"*.md\" \"content/**/*.md\"",
+    "test": "npm run -s lint"
   },
-  "homepage": "https://github.com/google/docsy-example#readme",
   "devDependencies": {
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.3.7",
-    "postcss-cli": "^9.0.2"
+    "@babel/cli": "^7.18",
+    "@babel/core": "^7.18",
+    "@babel/preset-env": "^7.18",
+    "@fullhuman/postcss-purgecss": "^5.0",
+    "autoprefixer": "^10.4",
+    "bootstrap": "^5.2.0-beta1",
+    "clipboard": "^2.0",
+    "eslint": "^8.19",
+    "exec-bin": "^1.0.0",
+    "highlight.js": "^11.5",
+    "instant.page": "^5.1",
+    "lazysizes": "^5.3",
+    "markdownlint-cli2": "^0.5.1",
+    "netlify-plugin-submit-sitemap": "^0.4.0",
+    "node-fetch": "^3.2",
+    "postcss": "^8.4",
+    "postcss-cli": "^10.0",
+    "purgecss-whitelister": "^2.4",
+    "shx": "^0.3.4",
+    "stylelint": "^14.9",
+    "stylelint-config-standard-scss": "^6.0",
+    "@waline/client": "^2.13.0"
   }
 }
