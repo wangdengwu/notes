@@ -1,0 +1,20 @@
+<div class="page-blank">
+
+  <div class="col-md-12 col-lg-9" id="waline"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let waline = document.getElementById('waline');
+      if (waline) {
+        Waline.init({
+          el: '#waline',
+          pageview: '.pageview',
+          serverURL: 'https://waline.dengwu.wang',
+          meta: ['nick', 'mail'],
+          reaction: true,
+          copyright: false
+        });
+      }
+    });
+  </script>
+</div>

@@ -62,7 +62,7 @@ anchor = "smart"
       unsafe = true
   [markup.highlight]
     # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
-    style = "tango"
+    style = "monokai"
     # Uncomment if you want your chosen highlight style used for code blocks without a specified language
      guessSyntax = "true"
 
@@ -78,6 +78,9 @@ privacy_policy = "https://beian.miit.gov.cn/"
 
 time_format_default = "2006.01.02"
 time_format_blog = "2006.01.02"
+
+DisqusShortname = true
+
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
 
@@ -121,7 +124,7 @@ algolia_docsearch = false
 offlineSearch = true
 
 # Enable syntax highlighting and copy buttons on code blocks with Prism
-prism_syntax_highlighting = true
+prism_syntax_highlighting = false
 
 # User interface configuration
 [params.ui]
@@ -152,7 +155,7 @@ no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY
 # If you want this feature, but occasionally need to remove the Reading time from a single page,
 # add "hide_readingtime: true" to the page's front matter
 [params.ui.readingtime]
-enable = false
+enable = true
 
 [params.links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.

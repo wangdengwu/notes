@@ -30,11 +30,11 @@ other = "陕ICP备2021012627号-2"
 
 # Post (blog, articles etc.)
 [post_byline_by]
-other = "借由"
+other = "作者"
 [post_created]
 other = "创建"
 [post_last_mod]
-other = "最后修改"
+other = "最后修改时间"
 [post_edit_this]
 other = "编辑此页"
 [post_view_this]
@@ -46,7 +46,7 @@ other = "提交文档问题"
 [post_create_project_issue]
 other = "提交项目问题"
 [post_posts_in]
-other = "张贴在"
+other = "写于"
 [post_reading_time]
 other = "分钟阅读"
 [post_less_than_a_minute_read]
