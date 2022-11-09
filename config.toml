@@ -6,6 +6,8 @@ contentDir = "content"
 defaultContentLanguage = "zh-cn"
 defaultContentLanguageInSubdir = false
 
+DisqusShortname = true
+
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
 

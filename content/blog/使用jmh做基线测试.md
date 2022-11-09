@@ -575,6 +575,3 @@ public class Father {
 在jmh-sample工程下执行，`mvn clean compile`即可在target/generated-sources目录下看到生成的类FatherChildren.java
 
 ![](https://img.dengwu.wang/blog/202205152144698.png)
-
-
-

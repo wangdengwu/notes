@@ -1,1 +1,4 @@
-<p class="reading-time"><i class="fa-solid fa-eye" aria-hidden="true"></i>&nbsp;<span class="pageview"></span> &nbsp;<i class="fa-solid fa-clock" aria-hidden="true"></i>{{ if gt .ReadingTime 1 }} {{ .ReadingTime }} {{ T "post_reading_time" }} {{ else }} {{ T "post_less_than_a_minute_read" }} {{ end }}&nbsp;</p>
+<p class="reading-time">
+  <i class="fa-solid fa-clock" aria-hidden="true"></i>
+  {{ if gt .ReadingTime 1 }} {{ .ReadingTime }} {{ T "post_reading_time" }} {{ else }} {{ T "post_less_than_a_minute_read" }} {{ end }}&nbsp;
+</p>
