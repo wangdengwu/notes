@@ -1,10 +1,64 @@
-.td-page-meta--child { display: none !important; }
-.td-page-meta--view { display: none !important; }
-.td-page-meta--edit { display: none !important; }
-.td-page-meta--issue { display: none !important; }
-.td-page-meta--project-issue { display: none !important; }
+.td-page-meta--child {
+  display: none !important;
+}
+
+.td-page-meta--view {
+  display: none !important;
+}
+
+.td-page-meta--edit {
+  display: none !important;
+}
+
+.td-page-meta--issue {
+  display: none !important;
+}
+
+.td-page-meta--project-issue {
+  display: none !important;
+}
 
 p.page-view {
   float: left;
   margin-right: 8px;
+}
+
+#waline > div > div.wl-comment > div > div.wl-footer > div.wl-actions > button:nth-child(3) {
+  display: none;
+}
+
+.td-navbar-nav-scroll {
+  margin-left: 0 !important;
+}
+
+footer {
+  min-height: 40px !important;
+}
+
+.nav-transparent .github-corner {
+  display: none !important;
+}
+
+.github-corner {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  right: 0;
+  border: 0;
+  transform: scale(1.1);
+}
+
+.github-corner svg {
+  color: #0f9d58;
+  fill: #fff;
+  height: 64px;
+  width: 64px;
+}
+
+.github-corner:hover .octo-arm {
+  animation: a 0.56s ease-in-out;
+}
+
+.github-corner .octo-arm {
+  animation: none;
 }

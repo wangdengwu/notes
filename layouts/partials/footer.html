@@ -1,0 +1,6 @@
+<footer class="bg-dark row d-print-none">
+  <div class="col-12 col-sm-12 text-center py-2 order-sm-2">
+    {{ with .Site.Params.copyright }}<small class="text-white">&copy; 2021-{{ now.Year}}|{{ .}}|{{ T "footer_all_rights_reserved" }}</small>{{ end }}
+    {{ with .Site.Params.privacy_policy }}<small class="d-none d-md-inline"><a href="{{ . }}" target="_blank" rel="noopener">{{ T "footer_privacy_policy" }}</a></small>{{ end }}
+  </div>
+</footer>

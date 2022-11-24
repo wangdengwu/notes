@@ -1,15 +1,16 @@
 ---
-title: echarts5图表渲染过程分析
+title: echarts图表渲染过程分析
 author: 王登武
 date: 2021-11-10 16:35:17
+slug: echarts-rendering-process-analysis
 categories: 前端
-tags: 
+tags:
  - 图表
-  - echarts
- 
+ - echarts
 ---
 
-### Echarts快速入门
+## Echarts快速入门
+
 Echarts就不做过多介绍了，相信大家都听说或者使用过，现在以官方给的第一个快速入门为基础，分析一下渲染过程。示例代码如下
 
 ``` javascript
@@ -47,7 +48,7 @@ Echarts就不做过多介绍了，相信大家都听说或者使用过，现在�
 ```
 渲染出来的效果就是这样的
 ![](https://img.dengwu.wang/blog/20211112181806.png)
-### 代码分析
+## 代码分析
 echarts是依赖zrender来绘制的，上述代码可以看到调用了echarts的2个方法，**init**和**setOption**,5.x版本的echarts是使用typescript写的。
 先看下init方法的定义,在src/echarts.ts里,为了更简洁清晰，后续代码我删掉了非主干流程渲染的部分内容。
 
@@ -95,19 +96,19 @@ class ECharts extends Eventful<ECEventDefinition> {
 	        opts?: EChartsInitOpts
 	    ) {
 	        super(new ECEventProcessor());
-	
+
 	        opts = opts || {};
-	
+
 	        // Get theme by name
 	        if (typeof theme === 'string') {
 	            theme = themeStorage[theme] as object;
 	        }
-	
+
 	        this._dom = dom;
-	
+
 	        let defaultRenderer = 'canvas';
 	        let defaultUseDirtyRect = false;
-	        
+
 	        const zr = this._zr = zrender.init(dom, {
 	            renderer: opts.renderer || defaultRenderer,
 	            devicePixelRatio: opts.devicePixelRatio,
@@ -115,49 +116,49 @@ class ECharts extends Eventful<ECEventDefinition> {
 	            height: opts.height,
 	            useDirtyRect: opts.useDirtyRect == null ? defaultUseDirtyRect : opts.useDirtyRect
 	        });
-	
+
 	        // Expect 60 fps.
 	        this._throttledZrFlush = throttle(bind(zr.flush, zr), 17);
-	
+
 	        theme = clone(theme);
 	        theme && backwardCompat(theme as ECUnitOption, true);
-	
+
 	        this._theme = theme;
-	
+
 	        this._locale = createLocaleObject(opts.locale || SYSTEM_LANG);
-	
+
 	        this._coordSysMgr = new CoordinateSystemManager();
-	
+
 	        const api = this._api = createExtensionAPI(this);
-	
+
 	        // Sort on demand
 	        function prioritySortFunc(a: StageHandlerInternal, b: StageHandlerInternal): number {
 	            return a.__prio - b.__prio;
 	        }
 	        timsort(visualFuncs, prioritySortFunc);
 	        timsort(dataProcessorFuncs, prioritySortFunc);
-	
+
 	        this._scheduler = new Scheduler(this, api, dataProcessorFuncs, visualFuncs);
-	
+
 	        this._messageCenter = new MessageCenter();
-	
+
 	        // Init mouse events
 	        this._initEvents();
-	
+
 	        // In case some people write `window.onresize = chart.resize`
 	        this.resize = bind(this.resize, this);
-	
+
 	        zr.animation.on('frame', this._onframe, this);
-	
+
 	        bindRenderedEvent(zr, this);
-	
+
 	        bindMouseEvent(zr, this);
-	
+
 	        // ECharts instance can be used as value.
 	        setAsPrimitive(this);
 	  }
     }
-``` 
+```
 内容比较多，重点代码是初始化了zrender
 
 ``` javascript
@@ -350,7 +351,7 @@ setOption<Opt extends ECBasicOption>(option: Opt, notMerge?: boolean | SetOption
         }
     }
 ```
-初始化model，`this._model.setOption(option as ECBasicOption, { replaceMerge }, optionPreprocessorFuncs);` 
+初始化model，`this._model.setOption(option as ECBasicOption, { replaceMerge }, optionPreprocessorFuncs);`
 `prepare(this);`的方法实现
 
 ``` javascript
@@ -480,7 +481,7 @@ target.getClass = function (
 
         return clz as Constructor;
  };
- 
+
  target.registerClass = function (
         clz: Constructor
     ): Constructor {
@@ -519,7 +520,7 @@ prepareView(view: ChartView, model: SeriesModel, ecModel: GlobalModel, api: Exte
         this._pipe(model, renderTask);
     }
 ```
- 
+
 而BarView不同的地方在，将renderTask加入了pipeline。
 setOption里的`prepare(this);`执行完了，总结一下就是初始化Model，初始化对应的ComponentView和ChartView并将series对应的task加入pipeline，再来看下`updateMethods.update.call(this, null, updateParams);`
 
@@ -544,7 +545,7 @@ updateMethods = {
                 coordSysMgr.update(ecModel, api);
                 clearColorPalette(ecModel);
                 scheduler.performVisualTasks(ecModel, payload);
-                
+
                 render(this, ecModel, api, payload, updateParams);
 
                 // Set background
@@ -625,7 +626,7 @@ render(titleModel: TitleModel, ecModel: GlobalModel, api: ExtensionAPI) {
         this.group.removeAll();
         const group = this.group;
 
-       
+
         const textEl = new graphic.Text({
             style: createTextStyle(textStyleModel, {
                 text: titleModel.get('text'),
@@ -635,7 +636,7 @@ render(titleModel: TitleModel, ecModel: GlobalModel, api: ExtensionAPI) {
         });
 
         group.add(textEl);
-        
+
     }
 }
 ```
@@ -754,7 +755,7 @@ private _renderNormal(
             .execute();
         this._data = data;
     }
-    
+
     const elementCreator: {
     [key in 'polar' | 'cartesian2d']: ElementCreator
 } = {
@@ -785,7 +786,7 @@ private _renderNormal(
 渲染ComponentView比较直接，而渲染ChartView类型的就绕来绕去，主要原因是ChartView可能数据比较多，需要逐步分批渲染，以减少卡顿，保持每秒60帧的渲染，因为1000ms，每一帧不能超过16ms，才能保持流畅的渲染。
 在setOption方法的最后调用了`this._zr.flush();`则直接将绘制渲染出来了，当然对于ChartView的绘制，可能还需要等到下一次渲染的时候才会显示出来。
 
-``` javascript 
+``` javascript
 private _onframe(): void {
         if (this._disposed) {
             return;
@@ -861,4 +862,5 @@ private _onframe(): void {
         }
    }
 ```
-对于echarts的渲染分析就到这了，下次有机会我们自己动手写一个ChartView。
+
+对于echarts的渲染分析就到这了。
