@@ -2,15 +2,20 @@
 title: 自定义condition注解
 author: 王登武
 date: 2022-05-05 10:24:50
+slug: Custom condition annotation
 categories:
   - Java
 tags:
   - Spring Boot
 ---
 Spring Boot有很多自定义Condition注解，比较常用的有@ConditionalOnProperty，@ConditionalOnBean，@ConditionalOnClass等,
+
 比如@ConditionalOnProperty就是依赖配置项来初始化一些信息，但是@ConditionalOnProperty使用起来，有一些缺陷，必须要指定到最终配置属性上。
+
 比如我有配置属性a.b.c=1,@ConditionalOnProperty要求必须到a.b.c，但是我只想依赖配置了a.b即可，@ConditionalOnProperty是做不到的，
+
 比如a.b其实是个map，对于a.b下的任意key都可以接受，key的名字是不固定的，可以是任意字符，所以需要判断只要有a.b的前缀即可初始化。
+
 #### 自定义注解
 
 ``` java
@@ -30,6 +35,7 @@ public @interface ConditionalOnPropertiesExist {
     String prefix() default "";
 }
 ```
+
 自定义注解类，然后再引入实现类
 
 ``` java
@@ -173,6 +179,9 @@ public class OnPropertiesExistCondition extends SpringBootCondition {
     }
 }
 ```
+
 核心逻辑在于，通过ConditionContext拿到AbstractEnvironment对象，这个对象里的getPropertySources就是配置文件的集合，
+
 然后通过startWith来做判断，是否有以a.b开头即可。
+
 虽然实现起来比较简单，但是这应该也是常用需求吧，不知道为什么spring boot没有内置这样功能的注解。
